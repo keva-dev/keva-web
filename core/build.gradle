@@ -1,0 +1,22 @@
+plugins {
+    id 'com.adarshr.test-logger' version '2.1.0'
+}
+
+group 'dev.keva'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        outputs.upToDateWhen { true }
+        showStandardStreams = true
+    }
+    maxParallelForks = Runtime.runtime.availableProcessors()
+}

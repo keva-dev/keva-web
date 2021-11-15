@@ -1,0 +1,23 @@
+plugins {
+    id 'com.adarshr.test-logger' version '2.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':core')
+
+    implementation 'com.google.code.gson:gson:2.8.9'
+}
+
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        outputs.upToDateWhen { true }
+        showStandardStreams = true
+    }
+    maxParallelForks = Runtime.runtime.availableProcessors()
+}

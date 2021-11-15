@@ -1,0 +1,51 @@
+plugins {
+    id "org.sonarqube" version "3.1.1"
+}
+
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java-library'
+    apply plugin: 'signing'
+    apply plugin: 'maven-publish'
+    apply plugin: 'jacoco'
+
+    group 'dev.keva'
+    version '1.0.0'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // Lombok
+        compileOnly 'org.projectlombok:lombok:1.18.12'
+        annotationProcessor 'org.projectlombok:lombok:1.18.12'
+        testCompileOnly 'org.projectlombok:lombok:1.18.12'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+        // JUnit
+        testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
+
+        // SLF4J as a facade
+        implementation 'org.slf4j:slf4j-api:1.7.2'
+    }
+
+    jacocoTestReport {
+        getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
+        reports {
+            xml.enabled true
+        }
+    }
+
+    test {
+        finalizedBy jacocoTestReport
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "tuhuynh27_keva"
+        property "sonar.organization", "huynhminhtufu-github"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}

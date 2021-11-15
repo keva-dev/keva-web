@@ -1,0 +1,36 @@
+plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+    id 'com.adarshr.test-logger' version '2.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':core')
+    implementation project(':annotation')
+    implementation project(':json')
+    implementation project(':template')
+
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+    implementation 'ch.qos.logback:logback-core:1.2.6'
+}
+
+shadowJar {
+    minimize()
+}
+
+application {
+    mainClassName = 'dev.keva.web.example.Main'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        outputs.upToDateWhen { true }
+        showStandardStreams = true
+    }
+    maxParallelForks = Runtime.runtime.availableProcessors()
+}
